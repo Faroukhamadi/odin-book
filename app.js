@@ -6,8 +6,10 @@ const logger = require('morgan');
 const mongoose = require('mongoose');
 const passport = require('passport');
 const FacebookStrategy = require('passport-facebook');
+const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const session = require('express-session');
+const bcrypt = require('bcrypt');
 
 const mongoDB =
   'mongodb+srv://faroukhamadi:16042002farouk@cluster0.bghb5.mongodb.net/odin-book?retryWrites=true&w=majority';
@@ -18,7 +20,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
-const authRouter = require('./routes/connect');
+const authRouter = require('./routes/auth');
 
 const app = express();
 // view engine setup
@@ -38,6 +40,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// NOTE: Facebook Log In Strategy
 passport.use(
   new FacebookStrategy(
     {
@@ -99,6 +102,28 @@ passport.use(
           // If User already exists login
           done(null, user);
         }
+      });
+    }
+  )
+);
+
+// NOTE: Local Log In Strategy
+passport.use(
+  new LocalStrategy(
+    { usernameField: 'email', passwordField: 'passwd' },
+    (username, password, done) => {
+      User.findOne({ username: username }, (err, user) => {
+        if (err) return done(err);
+        if (!user) return done(null, false, { message: 'Incorrect username' });
+        bcrypt.compare(password, user.password, (err, res) => {
+          if (res) {
+            // passwords match! log user in
+            return done(null, user);
+          } else {
+            // passwords do not match
+            return done(null, false, { message: 'Incorrect password' });
+          }
+        });
       });
     }
   )

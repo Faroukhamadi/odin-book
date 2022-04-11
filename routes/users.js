@@ -1,7 +1,5 @@
 const express = require('express');
 const router = express.Router();
-const connect_controller = require('../controllers/connectController');
-
-// router.get('/login', connect_controller.facebook_login_post);
+const connect_controller = require('../controllers/authController');
 
 module.exports = router;
