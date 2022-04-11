@@ -74,8 +74,7 @@ passport.use(
             email: profile.emails[0].value,
             first_name: profile.first_name,
             last_name: profile.last_name,
-            // FIXME: fix this later
-            hometown: profile._json.hometown.name,
+            hometown: profile._json.hometown ? profile._json.hometown.name : '',
             birthday: profile._json.birthday,
             gender: profile.gender,
             picture: profile.photos
