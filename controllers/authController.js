@@ -48,10 +48,6 @@ exports.facebook_login_redirect = passport.authenticate('facebook', {
   successRedirect: '/',
 });
 
-exports.local_login_get = (req, res, next) => {
-  res.render('login');
-};
-
 exports.local_login_post = passport.authenticate('local', {
   successRedirect: '/success',
   failureRedirect: '/failure',

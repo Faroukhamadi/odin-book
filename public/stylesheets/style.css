@@ -1,8 +1,55 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap');
 
 a {
-  color: #00B7FF;
+  color: #00b7ff;
+}
+
+#logo {
+  font-family: 'Titillium Web', sans-serif;
+  color: #1877f2;
+  cursor: default;
+}
+
+body,
+html {
+  height: 100%;
+}
+
+body {
+  background: #f0f2f5;
+}
+
+.fill-height {
+  min-height: 100%;
+  height: auto !important; /* cross-browser */
+  height: 100%; /* cross-browser */
+}
+
+#login-card {
+  box-shadow: 5px 2px 20px 3px rgba(0.1, 0.1, 0.1, 0.1);
+  border-radius: 7px;
+}
+
+.login-button {
+  width: 100%;
+  font-weight: bolder;
+  font-size: larger;
+}
+
+.create-div {
+  display: flex;
+  justify-content: center;
+}
+
+#login-text {
+  font-weight: 400;
+}
+
+::placeholder {
+  font-weight: lighter;
+}
+
+.create-button {
+  font-weight: bold;
+  font-size: large;
 }
