@@ -75,11 +75,9 @@ passport.use(
           user = new User({
             facebook_id: profile.id,
             email: profile.emails[0].value,
-            first_name: profile.name.givenName,
-            last_name: profile.name.familyName,
+            first_name: profile._json.first_name,
+            last_name: profile._json.last_name,
             password: '',
-            first_name: profile.first_name,
-            last_name: profile.last_name,
             hometown: profile._json.hometown ? profile._json.hometown.name : '',
             birthday: profile._json.birthday,
             gender: profile.gender,

@@ -27,6 +27,9 @@ async function seedDB() {
           })
           .toString(),
         email: faker.faker.internet.email(),
+        password: faker.faker.internet.password(),
+        first_name: faker.faker.name.firstName(),
+        last_name: faker.faker.name.lastName(),
         hometown: `${faker.faker.address.city()}, ${faker.faker.address.country()}`,
         gender: faker.faker.name.gender(true),
         picture: faker.faker.image.avatar(),

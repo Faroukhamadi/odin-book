@@ -1,9 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Titillium+Web:wght@700&display=swap');
 
-a {
-  color: #00b7ff;
-}
-
 #logo {
   font-family: 'Titillium Web', sans-serif;
   color: #1877f2;
@@ -49,7 +45,45 @@ body {
   font-weight: lighter;
 }
 
+.signup-button,
 .create-button {
   font-weight: bold;
   font-size: large;
+}
+
+.signup-button {
+  width: 250px;
+}
+
+.card-top {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.already-link {
+  color: #1877f2;
+}
+
+.already-link:hover {
+  text-decoration: none;
+  color: #1877f2;
+}
+
+.month,
+.day,
+.year {
+  border-radius: 3px;
+  width: 30%;
+  height: 40px;
+}
+
+.day,
+.year {
+  margin-left: 10px;
+}
+
+.very-small {
+  font-weight: lighter;
 }
