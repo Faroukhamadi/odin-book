@@ -1,6 +1,7 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
+const { format, parseISO } = require('date-fns');
 
 exports.local_signup_get = (req, res) => {
   res.render('signup');
@@ -18,7 +19,10 @@ exports.local_signup_post = (req, res, next) => {
       posts: [],
       friends: [],
       friendRequests: [],
-      birthday: format(req.body.birthday, 'MM/dd/yyyy'),
+      birthday:
+        typeof req.body.birthday === 'string'
+          ? format(parseISO(req.body.birthday), 'MM/dd/yyyy')
+          : format(req.body.birthday, 'MM/dd/yyyy'),
       password: hashedPassword,
     }).save((err) => {
       if (err) return next(err);
@@ -44,5 +48,16 @@ exports.facebook_login_redirect = passport.authenticate('facebook', {
   successRedirect: '/',
 });
 
-exports.local_login_get = (req, res) => {};
-exports.local_login_post = () => {};
+exports.local_login_get = (req, res, next) => {
+  res.render('login');
+};
+
+exports.local_login_post = passport.authenticate('local', {
+  successRedirect: '/success',
+  failureRedirect: '/failure',
+});
+
+exports.logout = (req, res) => {
+  req.logout();
+  res.redirect('/');
+};

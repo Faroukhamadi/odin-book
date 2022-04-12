@@ -11,4 +11,6 @@ router.post('/local', connect_controller.local_login_post);
 router.get('/signup', connect_controller.local_signup_get);
 router.post('/signup', connect_controller.local_signup_post);
 
+router.get('/logout', connect_controller.logout);
+
 module.exports = router;

@@ -75,6 +75,7 @@ passport.use(
           user = new User({
             facebook_id: profile.id,
             email: profile.emails[0].value,
+            password: '',
             first_name: profile.first_name,
             last_name: profile.last_name,
             hometown: profile._json.hometown ? profile._json.hometown.name : '',
@@ -109,24 +110,29 @@ passport.use(
 
 // NOTE: Local Log In Strategy
 passport.use(
-  new LocalStrategy(
-    { usernameField: 'email', passwordField: 'passwd' },
-    (username, password, done) => {
-      User.findOne({ username: username }, (err, user) => {
-        if (err) return done(err);
-        if (!user) return done(null, false, { message: 'Incorrect username' });
-        bcrypt.compare(password, user.password, (err, res) => {
-          if (res) {
-            // passwords match! log user in
-            return done(null, user);
-          } else {
-            // passwords do not match
-            return done(null, false, { message: 'Incorrect password' });
-          }
-        });
+  new LocalStrategy((username, password, done) => {
+    User.findOne({ email: username }, (err, user) => {
+      console.log('LOCAL STRATEGY FUNCTION IS EXECUTING');
+      if (err) return done(err);
+      if (!user) {
+        console.log('NO USER');
+        return done(null, false, { message: 'Incorrect username' });
+      }
+      bcrypt.compare(password, user.password, (err, res) => {
+        if (res) {
+          // passwords match! log user in
+          console.log('LOG USER IN!');
+          console.log('This is user: ', user);
+          return done(null, user);
+        } else {
+          // passwords do not match
+          console.log('password: ', password, 'userPassword: ', user.password);
+          console.log('PASSWORDS DO NOT MATCH');
+          return done(null, false, { message: 'Incorrect password' });
+        }
       });
-    }
-  )
+    });
+  })
 );
 
 passport.serializeUser((user, done) => {

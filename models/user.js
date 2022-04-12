@@ -4,6 +4,7 @@ const { Schema } = require('mongoose');
 const UserSchema = new Schema({
   facebook_id: { type: String },
   email: { type: String },
+  password: { type: String },
   first_name: { type: String },
   last_name: { type: String },
   hometown: { type: String },
