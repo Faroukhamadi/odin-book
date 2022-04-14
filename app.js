@@ -21,6 +21,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'));
 const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const authRouter = require('./routes/auth');
+const postsRouter = require('./routes/post');
 
 const app = express();
 // view engine setup
@@ -40,7 +41,6 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// NOTE: Facebook Log In Strategy
 passport.use(
   new FacebookStrategy(
     {
@@ -108,7 +108,6 @@ passport.use(
   )
 );
 
-// NOTE: Local Log In Strategy
 passport.use(
   new LocalStrategy((username, password, done) => {
     User.findOne({ email: username }, (err, user) => {
@@ -159,6 +158,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/auth', authRouter);
+app.use('/posts', postsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

@@ -3,3 +3,72 @@ const Post = require('../models/post');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const { body, validationResult } = require('express-validator');
+
+exports.send_friend_request = (req, res, next) => {
+  User.findByIdAndUpdate(
+    req.params.id,
+    { $push: { friendRequests: req.user._id } },
+    (err, result) => {
+      if (err) console.log('error: ', err);
+      else res.json({ result });
+    }
+  );
+};
+
+exports.accept_friend_request = (req, res, next) => {
+  User.updateOne(
+    { _id: req.user._id },
+    {
+      $pullAll: {
+        friendRequests: req.params._id,
+      },
+    },
+    (err, user) => {
+      if (err) console.log('err: ', err);
+      else
+        User.findByIdAndUpdate(
+          req.user._id,
+          { $push: { friends: req.params._id } },
+          (err, user) => {
+            if (err) console.log(err);
+            else res.json({ user });
+          }
+        );
+    }
+  );
+};
+
+// ------------- POSTMAN TESTING SECTION -------------
+exports.send_friend_request_test = (req, res, next) => {
+  User.findByIdAndUpdate(
+    req.body.receiverId,
+    { $push: { friendRequests: req.body.senderId } },
+    (err, result) => {
+      if (err) console.log('error: ', err);
+      else res.json({ result });
+    }
+  );
+};
+
+exports.accept_friend_request_test = (req, res, next) => {
+  User.updateOne(
+    { _id: req.body.receiverId },
+    {
+      $pull: {
+        friendRequests: req.body.senderId,
+      },
+    },
+    (err, user) => {
+      if (err) console.log('err: ', err);
+      else
+        User.findByIdAndUpdate(
+          req.body.receiverId,
+          { $push: { friends: req.body.senderId } },
+          (err, user) => {
+            if (err) console.log(err);
+            else res.json({ user });
+          }
+        );
+    }
+  );
+};
