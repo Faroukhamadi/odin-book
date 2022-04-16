@@ -87,3 +87,40 @@ body {
 .very-small {
   font-weight: lighter;
 }
+
+.meta-svg {
+  fill: white;
+  cursor: pointer;
+  transition: 300ms fill ease-in-out;
+}
+
+.meta-svg:hover {
+  fill: rgb(228, 228, 228);
+}
+
+.nav-dropdown:hover {
+  background: red;
+}
+
+.navbar-light .navbar-brand {
+  color: #ffffff;
+}
+
+.navbar-light .navbar-nav .active > .nav-link,
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .nav-link.show,
+.navbar-light .navbar-nav .show > .nav-link {
+  color: #ffffff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  color: #ffffff;
+}
+
+.navbar-light .navbar-nav .nav-link {
+  transition: 300ms color ease-in-out;
+}
+
+.navbar-light .navbar-nav .nav-link:hover {
+  color: rgb(228, 228, 228) !important;
+}
