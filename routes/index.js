@@ -1,11 +1,8 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
+const index_controller = require('../controllers/indexController');
 
 /* GET home page. */
-router.get('/', function (req, res, next) {
-  // if (req.user) res.render('home');
-  // else res.redirect('/auth');
-  res.render('home');
-});
+router.get('/', index_controller.home_page_get);
 
 module.exports = router;
