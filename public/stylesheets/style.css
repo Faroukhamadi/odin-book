@@ -126,7 +126,7 @@ body {
 }
 
 /* COPIED PART */
-.card {
+.post-card {
   border: none;
 }
 
@@ -134,7 +134,7 @@ body {
   color: #a09c9c;
 }
 
-hr {
+.post-hr {
   color: #a09c9c;
   margin-top: 4px;
   margin-bottom: 8px;
@@ -185,7 +185,7 @@ hr {
   color: blue;
 }
 
-.form-control {
+.form-control-post {
   border-radius: 26px;
 }
 
@@ -215,8 +215,4 @@ hr {
 
 .interaction:hover {
   background: rgb(228, 228, 228);
-}
-
-.font-weight-bold:hover {
-  cursor: pointer;
 }
