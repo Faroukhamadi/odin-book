@@ -22,22 +22,18 @@ block content
             a.nav-link(href='#').text-white.font-weight-bold Log Out
   .container.mt-5.mb-5
     each datum in data
-      p #{datum.author.first_name}
       .row.d-flex.align-items-center.justify-content-center
-        .col-md-.mb-5
+        .col-sm.mb-5
           .card.post-card
             .d-flex.justify-content-between.p-2.px-3
               .d-flex.flex-row.align-items-center.usable
-                img.rounded-circle(src='https://i.imgur.com/UXdKE3o.jpg' width='50')
+                img.rounded-circle(src=datum.author.picture width='50' class="border border-primary")
                 .d-flex.flex-column.ml-2
-                  span.font-weight-bold Jeanette Sun
-                  small.text-primary Collegues
-              .d-flex.flex-row.mt-1.ellipsis
-                small.mr-2 20 mins
-                i.fa.fa-ellipsis-h
+                  span.font-weight-bold #{datum.author.first_name + ' ' + datum.author.last_name}
+                  .ellipsis
+                    small.mr-2 20 mins
             .p-2
-              p.lead.font-weight-bold.text-justify
-                | Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt.
+              p.lead.font-weight-bold.text-justify #{datum.content}
               hr.post-hr
               .d-flex.justify-content-between.align-items-center
                 .d-flex.flex-row.icons.d-flex.align-items-center
@@ -55,8 +51,8 @@ block content
                     | Share
                   
                 .d-flex.flex-row.muted-color
-                  span 3 Likes
-                  span.ml-2 2 Comments
+                  span #{datum.likes.length} Likes
+                  span.ml-2 #{datum.comments.length} Comments
               hr.post-hr
               .comments
                 .d-flex.flex-row.mb-2

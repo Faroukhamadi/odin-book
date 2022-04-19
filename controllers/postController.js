@@ -73,3 +73,10 @@ exports.like_post_test = (req, res, next) => {
     }
   );
 };
+
+exports.post_list_test = (req, res, next) => {
+  Post.find({}, (err, result) => {
+    if (err) return next(err);
+    res.json({ result });
+  });
+};

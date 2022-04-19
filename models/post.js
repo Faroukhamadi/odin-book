@@ -6,6 +6,11 @@ const PostSchema = new Schema({
   likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   author: { type: Schema.Types.ObjectId, ref: 'User' },
+  Date: { type: Date, required: true },
+});
+
+PostSchema.virtual('dateTime').get(function () {
+  // TODO: figure out the format I want and implement this later
 });
 
 const Post = mongoose.model('Post', PostSchema);

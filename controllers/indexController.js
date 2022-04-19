@@ -22,11 +22,3 @@ exports.home_page_get = (req, res, next) => {
       });
   });
 };
-
-//  (err, result2) => {
-//    if (err) return next(err);
-//    console.log('result2: ', result2);
-//    res.render('home', {
-//      data: result2,
-//    });
-//  };
