@@ -1,4 +1,5 @@
 const Post = require('../models/post');
+const Comment = require('../models/comment');
 
 exports.create_post = (req, res, next) => {
   const post = new Post({
@@ -78,5 +79,32 @@ exports.post_list_test = (req, res, next) => {
   Post.find({}, (err, result) => {
     if (err) return next(err);
     res.json({ result });
+  });
+};
+
+exports.create_comment_test = (req, res, next) => {
+  const comment = new Comment({
+    content: req.body.content,
+    author: '6255964096305191e8a91dac', // my _id
+  });
+
+  comment.save((err, comment_result) => {
+    if (err) {
+      console.log('Error: ', err);
+      return next(err);
+    }
+    // hayet kiddos post
+    Post.findByIdAndUpdate(
+      '625b7d3ab49079faffde77f4',
+      { $push: { comments: comment_result._id } },
+      (err, result) => {
+        if (err) {
+          console.log('Error: ', err);
+          return next(err);
+        }
+        console.log('result: ', result);
+        res.json({ comment_result });
+      }
+    );
   });
 };

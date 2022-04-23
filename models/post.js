@@ -6,7 +6,7 @@ const PostSchema = new Schema({
   likes: [{ type: Schema.Types.ObjectId, ref: 'User' }],
   comments: [{ type: Schema.Types.ObjectId, ref: 'Comment' }],
   author: { type: Schema.Types.ObjectId, ref: 'User' },
-  Date: { type: Date, required: true },
+  Date: { type: Date, required: true, default: new Date() },
 });
 
 PostSchema.virtual('dateTime').get(function () {

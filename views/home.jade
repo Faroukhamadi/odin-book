@@ -52,21 +52,19 @@ block content
                   
                 .d-flex.flex-row.muted-color
                   span #{datum.likes.length} Likes
-                  span.ml-2 #{datum.comments.length} Comments
+                  if (datum.comments)
+                    span.ml-2  #{datum.comments.length} Comments
+                  else 
+                    span.ml-2 0 Comments
               hr.post-hr
               .comments
-                .d-flex.flex-row.mb-2
-                  img.rounded-image(src='https://i.imgur.com/9AZ2QX1.jpg' width='40')
-                  .d-flex.flex-column.ml-2
-                    span.name Daniel Frozer
-                    small.comment-text I like this alot! thanks alot
-
-                .d-flex.flex-row.mb-2
-                  img.rounded-image(src='https://i.imgur.com/1YrCKa1.jpg' width='40')
-                  .d-flex.flex-column.ml-2
-                    span.name Elizabeth goodmen
-                    small.comment-text Thanks for sharing!
-                .comment-input
-                  form(action="/", method="POST", onsubmit="event.preventDefault();") 
-                    input.form-control(type='text')
-          
+                if (datum.comments)
+                  each comment in datum.comments
+                    .d-flex.flex-row.mb-2
+                      img.rounded-image(src=comment.author.picture width='40')
+                      .d-flex.flex-column.ml-2
+                        span.name #{comment.author.first_name + ' ' + comment.author.last_name}
+                        small.comment-text #{comment.content}
+                  .comment-input
+                    form(action="/", method="POST", onsubmit="event.preventDefault();") 
+                      input.form-control(type='text')

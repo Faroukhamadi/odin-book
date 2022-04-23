@@ -13,11 +13,16 @@ exports.home_page_get = (req, res, next) => {
       ],
     })
       .populate('author')
-      .exec((err, result2) => {
+      // .populate('comments')
+      .populate({
+        path: 'comments',
+        populate: { path: 'author' },
+      })
+      .exec((err, results) => {
         if (err) return next(err);
-        console.log('result2: ', result2);
+        console.log('results: ', results);
         res.render('home', {
-          data: result2,
+          data: results,
         });
       });
   });
