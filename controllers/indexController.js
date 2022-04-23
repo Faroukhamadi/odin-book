@@ -13,7 +13,6 @@ exports.home_page_get = (req, res, next) => {
       ],
     })
       .populate('author')
-      // .populate('comments')
       .populate({
         path: 'comments',
         populate: { path: 'author' },
