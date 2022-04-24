@@ -39,24 +39,25 @@ exports.accept_friend_request = (req, res, next) => {
 };
 
 exports.user_index_get = (req, res, next) => {
-  User.find(
-    {
-      $and: [
-        { _id: { $ne: req.user._id } },
-        { _id: { $nin: req.user.friends } },
-        { _id: { $nin: req.user.friendRequests } },
-        { _id: {} },
-      ],
-    },
-    (err, users) => {
-      if (err) {
-        console.log('Err: ', err);
-        return next(err);
-      }
-      console.log('users: ', users);
-      res.json({ users });
-    }
-  );
+  // res.render('users_index');
+  // User.find(
+  //   {
+  //     $and: [
+  //       { _id: { $ne: req.user._id } },
+  //       { _id: { $nin: req.user.friends } },
+  //       { _id: { $nin: req.user.friendRequests } },
+  //       { _id: {} },
+  //     ],
+  //   },
+  //   (err, users) => {
+  //     if (err) {
+  //       console.log('Err: ', err);
+  //       return next(err);
+  //     }
+  //     console.log('users: ', users);
+  //     res.json({ users });
+  //   }
+  // );
 };
 
 // ------------- POSTMAN TESTING SECTION -------------
@@ -116,7 +117,9 @@ exports.user_index_get_test = async (req, res, next) => {
         return next(err);
       }
       console.log('users: ', users);
-      res.json({ users });
+      // res.json({ users });
+      console.log('data:', users);
+      res.render('users_index', { data: users });
     }
   );
 };
