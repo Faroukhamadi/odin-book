@@ -16,6 +16,10 @@ const UserSchema = new Schema({
   birthday: { type: String },
 });
 
+UserSchema.virtual('url').get(function () {
+  return '/users/' + this._id;
+});
+
 const User = mongoose.model('User', UserSchema);
 
 module.exports = User;

@@ -61,7 +61,7 @@ block content
                 if (datum.comments)
                   each comment in datum.comments
                     .d-flex.flex-row.mb-2
-                      img.rounded-image(src=comment.author.picture width='40')
+                      img.rounded-image(src=comment.author.picture width='40' class="border border-primary")
                       .d-flex.flex-column.ml-2
                         span.name #{comment.author.first_name + ' ' + comment.author.last_name}
                         small.comment-text #{comment.content}

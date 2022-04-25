@@ -60,6 +60,18 @@ exports.user_index_get = (req, res, next) => {
   // );
 };
 
+// exports.user_show_get = (req, res, next) => {
+//   User.findById(req.body.userId, 'posts', (err, userProfile) => {
+//     if (err) {
+//       console.log('Err:', err);
+//       return next(err);
+//     }
+//     res.render('user_show', {
+//       data: userProfile,
+//     });
+//   });
+// };
+
 // ------------- POSTMAN TESTING SECTION -------------
 exports.send_friend_request_test = (req, res, next) => {
   User.findByIdAndUpdate(
@@ -122,4 +134,34 @@ exports.user_index_get_test = async (req, res, next) => {
       res.render('users_index', { data: users });
     }
   );
+};
+
+exports.user_show_get_test = (req, res, next) => {
+  User.findById('6255967b6deeb3c285b9940f')
+    .populate({
+      path: 'posts',
+      populate: {
+        path: 'comments',
+        // NOTE: Might need the id in select later
+        populate: {
+          path: 'author',
+          select: '-_id picture first_name last_name',
+        },
+      },
+    })
+    // .populate({
+    //   path: 'author',
+    //   populate: { path: 'user' },
+    // })
+    .exec((err, userProfile) => {
+      if (err) {
+        console.log('Err:', err);
+        return next(err);
+      }
+      console.log({ data: userProfile });
+      res.render('user_show', {
+        data: userProfile,
+      });
+      // res.json({ userProfile });
+    });
 };
