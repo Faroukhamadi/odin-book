@@ -70,7 +70,6 @@ passport.use(
         if (!user) {
           console.log('No user section');
           console.log(user);
-          console.log('profile: ', profile);
           // create new user
           user = new User({
             facebook_id: profile.id,
@@ -91,7 +90,6 @@ passport.use(
             else {
               console.log('saving user ...');
               console.log(user);
-              console.log('profile: ', profile);
               done(null, user);
             }
           });
@@ -99,7 +97,6 @@ passport.use(
           console.log('user section');
           console.log('display Name if user exists: ', profile.displayName);
           console.log(user);
-          console.log('profile: ', profile);
           // If User already exists login
           done(null, user);
         }
@@ -148,8 +145,6 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(express.urlencoded({ extended: false }));
 app.use((req, res, next) => {
-  console.log('req user: ', req.user);
-  console.log('res.locals.currentUser', res.locals.currentUser);
   res.locals.currentUser = req.user;
   res.app.locals.currentUser = req.user;
   next();

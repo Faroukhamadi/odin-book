@@ -38,39 +38,65 @@ exports.accept_friend_request = (req, res, next) => {
   );
 };
 
-exports.user_index_get = (req, res, next) => {
-  // res.render('users_index');
-  // User.find(
-  //   {
-  //     $and: [
-  //       { _id: { $ne: req.user._id } },
-  //       { _id: { $nin: req.user.friends } },
-  //       { _id: { $nin: req.user.friendRequests } },
-  //       { _id: {} },
-  //     ],
-  //   },
-  //   (err, users) => {
-  //     if (err) {
-  //       console.log('Err: ', err);
-  //       return next(err);
-  //     }
-  //     console.log('users: ', users);
-  //     res.json({ users });
-  //   }
-  // );
+exports.user_index_get = async (req, res, next) => {
+  let user = await User.findById(req.user._id);
+  console.log('user: ', user);
+  // I don't want myself to be in the list
+  // I'm friends with: Casper Spencer
+  // I have a friend request from hayet
+  // I don't want people I've sent a friend request to be on the list: - Maverick
+  User.find(
+    {
+      $and: [
+        { _id: { $ne: user._id } },
+        { _id: { $nin: user.friends } },
+        { _id: { $nin: user.friendRequests } },
+        { friendRequests: { $ne: user._id } },
+      ],
+    },
+    (err, users) => {
+      if (err) {
+        console.log('Err: ', err);
+        return next(err);
+      }
+      console.log('users: ', users);
+      // res.json({ users });
+      console.log('data:', users);
+      res.render('users_index', { data: users });
+    }
+  );
 };
 
-// exports.user_show_get = (req, res, next) => {
-//   User.findById(req.body.userId, 'posts', (err, userProfile) => {
-//     if (err) {
-//       console.log('Err:', err);
-//       return next(err);
-//     }
-//     res.render('user_show', {
-//       data: userProfile,
-//     });
-//   });
-// };
+exports.user_show_get = (req, res, next) => {
+  User.findById(req.params.id)
+    .populate({
+      path: 'posts',
+      populate: {
+        path: 'comments',
+        // NOTE: Might need the id in select later
+        populate: {
+          path: 'author',
+          select: '-_id picture first_name last_name',
+        },
+      },
+    })
+    // .populate({
+    //   path: 'author',
+    //   populate: { path: 'user' },
+    // })
+    .exec((err, userProfile) => {
+      if (err) {
+        console.log('Err:', err);
+        return next(err);
+      }
+      console.log({ data: userProfile });
+      res.render('user_show', {
+        data: userProfile,
+        route: req.baseUrl,
+      });
+      // res.json({ userProfile });
+    });
+};
 
 // ------------- POSTMAN TESTING SECTION -------------
 exports.send_friend_request_test = (req, res, next) => {
@@ -137,7 +163,8 @@ exports.user_index_get_test = async (req, res, next) => {
 };
 
 exports.user_show_get_test = (req, res, next) => {
-  User.findById('6255967b6deeb3c285b9940f')
+  // User.findById('6255967b6deeb3c285b9940f')
+  User.findById('6255964096305191e8a91dac')
     .populate({
       path: 'posts',
       populate: {
