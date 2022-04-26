@@ -5,12 +5,13 @@ const passport = require('passport');
 const { body, validationResult } = require('express-validator');
 
 exports.send_friend_request = (req, res, next) => {
+  console.log('handler function executing');
   User.findByIdAndUpdate(
     req.params.id,
     { $push: { friendRequests: req.user._id } },
     (err, result) => {
       if (err) console.log('error: ', err);
-      else res.json({ result });
+      else res.redirect('/users/index-page');
     }
   );
 };

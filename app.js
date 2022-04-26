@@ -10,9 +10,9 @@ const LocalStrategy = require('passport-local');
 const User = require('./models/user');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
+require('dotenv').config();
 
-const mongoDB =
-  'mongodb+srv://faroukhamadi:16042002farouk@cluster0.bghb5.mongodb.net/odin-book?retryWrites=true&w=majority';
+const mongoDB = process.env.MONGO_URI;
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;

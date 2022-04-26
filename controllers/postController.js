@@ -17,6 +17,33 @@ exports.create_post = (req, res, next) => {
   });
 };
 
+exports.create_comment = (req, res, next) => {
+  const comment = new Comment({
+    content: req.body.content,
+    author: req.user._id,
+  });
+
+  comment.save((err, comment_result) => {
+    if (err) {
+      console.log('Error: ', err);
+      return next(err);
+    }
+    // hayet kiddos post
+    Post.findByIdAndUpdate(
+      req.params.id,
+      { $push: { comments: comment_result._id } },
+      (err, result) => {
+        if (err) {
+          console.log('Error: ', err);
+          return next(err);
+        }
+        console.log('result: ', result);
+        res.redirect('/');
+      }
+    );
+  });
+};
+
 exports.like_post = (req, res, next) => {
   console.log('--------hello------------');
   Post.findByIdAndUpdate(

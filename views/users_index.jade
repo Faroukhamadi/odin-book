@@ -14,4 +14,5 @@ block content
                   h5.card-title.display-4 #{datum.first_name + ' ' + datum.last_name}
                   p.lead.font-weight-bold.card-text.font-weight-light Hometown: #{datum.hometown}
                   p.lead.font-weight-bold.card-text.font-weight-light Friends: #{datum.friends.length}
-                  button.btn.btn-primary.btn-lg(type='button') Send Friend Request
+                  form(action="/users/friend-request/" + datum._id, method="post") 
+                    button.btn.btn-primary.btn-lg(type='submit') Send Friend Request

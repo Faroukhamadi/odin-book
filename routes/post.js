@@ -3,7 +3,7 @@ const post_controller = require('../controllers/postController');
 
 router.post('/create-post', post_controller.create_post);
 // NOTE: Implement this later
-// router.post('/create-comment', post_controller.create_comment);
+router.post('/create-comment/:id', post_controller.create_comment);
 router.post('/like-post/:id', post_controller.like_post);
 router.get('/like-count', post_controller.like_count);
 
