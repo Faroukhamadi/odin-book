@@ -18,19 +18,23 @@ exports.create_post = (req, res, next) => {
 };
 
 exports.like_post = (req, res, next) => {
+  console.log('--------hello------------');
   Post.findByIdAndUpdate(
     req.params.id,
     { $push: { likes: req.user._id } },
     (err, result) => {
       if (err) {
+        console.log('aaaaaaaaaaa');
         console.log('Error: ', err);
         return next(err);
       } else {
-        res.json({ result });
+        res.redirect('/');
       }
     }
   );
 };
+
+// TODO: Implement remove like later
 
 exports.like_count = (req, res, next) => {
   Post.countDocuments({}, (err, count) => {
@@ -61,6 +65,7 @@ exports.create_post_test = (req, res, next) => {
 };
 
 exports.like_post_test = (req, res, next) => {
+  console.log('byeeee');
   Post.findByIdAndUpdate(
     req.body.postId,
     { $push: { likes: req.body.userId } },
