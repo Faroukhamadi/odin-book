@@ -45,6 +45,8 @@ exports.create_comment = (req, res, next) => {
 };
 
 exports.like_post = (req, res, next) => {
+  // TODO: check that person who liked doesn't already exist
+  // if he exists remove him else add him
   console.log('--------hello------------');
   Post.findByIdAndUpdate(
     req.params.id,

@@ -25,7 +25,8 @@ block content
           img(src=data.picture alt='profile picture').rounded-circle.border.border-5.border-primary.img-fluid
         .flex-grow-1.ms-3
           .display-4.font-weight-bold.ml-3 #{data.first_name + ' ' + data.last_name}
-            button.btn.btn-primary.btn-lg.ml-5.font-weight-bold(type='button') Send Friend Request
+            if (!(currentUser._id.equals(data._id)))
+              button.btn.btn-primary.btn-lg.ml-5.font-weight-bold(type='button') Send Friend Request
 
 
     .row

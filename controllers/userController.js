@@ -10,8 +10,10 @@ exports.send_friend_request = (req, res, next) => {
     req.params.id,
     { $push: { friendRequests: req.user._id } },
     (err, result) => {
-      if (err) console.log('error: ', err);
-      else res.redirect('/users/index-page');
+      if (err) {
+        console.log('Err: ', err);
+        return next(err);
+      } else res.redirect('/users/index-page');
     }
   );
 };
@@ -20,19 +22,23 @@ exports.accept_friend_request = (req, res, next) => {
   User.updateOne(
     { _id: req.user._id },
     {
-      $pullAll: {
-        friendRequests: req.params._id,
+      $pull: {
+        friendRequests: req.params.id,
       },
     },
     (err, user) => {
-      if (err) console.log('err: ', err);
-      else
+      if (err) {
+        console.log('err: ', err);
+        return next(err);
+      } else
         User.findByIdAndUpdate(
           req.user._id,
-          { $push: { friends: req.params._id } },
+          { $push: { friends: req.params.id } },
           (err, user) => {
-            if (err) console.log(err);
-            else res.json({ user });
+            if (err) {
+              console.log('Err: ', err);
+              return next(err);
+            } else res.redirect('/users/friend-requests');
           }
         );
     }
@@ -57,7 +63,10 @@ exports.user_index_get = async (req, res, next) => {
     },
     (err, users) => {
       if (err) {
-        console.log('Err: ', err);
+        {
+          console.log('Err: ', err);
+          return next(err);
+        }
         return next(err);
       }
       console.log('users: ', users);
@@ -81,10 +90,6 @@ exports.user_show_get = (req, res, next) => {
         },
       },
     })
-    // .populate({
-    //   path: 'author',
-    //   populate: { path: 'user' },
-    // })
     .exec((err, userProfile) => {
       if (err) {
         console.log('Err:', err);
@@ -95,7 +100,28 @@ exports.user_show_get = (req, res, next) => {
         data: userProfile,
         route: req.baseUrl,
       });
-      // res.json({ userProfile });
+    });
+};
+
+exports.friend_requests_get = (req, res, next) => {
+  console.log('hello');
+  console.log('hello');
+  console.log('yes', req.user._id);
+  User.findById(req.user._id, 'friendRequests')
+    .populate({
+      path: 'friendRequests',
+      select: 'first_name last_name hometown friends picture',
+    })
+    .exec((err, result) => {
+      if (err) {
+        {
+          console.log('Err: ', err);
+          return next(err);
+        }
+        return next(err);
+      }
+      console.log('last resulttttttt-', result);
+      res.render('friend_requests', { data: result });
     });
 };
 
@@ -120,8 +146,10 @@ exports.accept_friend_request_test = (req, res, next) => {
       },
     },
     (err, user) => {
-      if (err) console.log('err: ', err);
-      else
+      if (err) {
+        console.log('err: ', err);
+        return next(err);
+      } else
         User.findByIdAndUpdate(
           req.body.receiverId,
           { $push: { friends: req.body.senderId } },
@@ -152,7 +180,10 @@ exports.user_index_get_test = async (req, res, next) => {
     },
     (err, users) => {
       if (err) {
-        console.log('Err: ', err);
+        {
+          console.log('Err: ', err);
+          return next(err);
+        }
         return next(err);
       }
       console.log('users: ', users);
@@ -177,10 +208,6 @@ exports.user_show_get_test = (req, res, next) => {
         },
       },
     })
-    // .populate({
-    //   path: 'author',
-    //   populate: { path: 'user' },
-    // })
     .exec((err, userProfile) => {
       if (err) {
         console.log('Err:', err);
@@ -191,5 +218,23 @@ exports.user_show_get_test = (req, res, next) => {
         data: userProfile,
       });
       // res.json({ userProfile });
+    });
+};
+
+exports.friend_requests_get_test = (req, res, next) => {
+  User.findById('6255964096305191e8a91dac', 'friendRequests')
+    .populate({
+      path: 'friendRequests',
+      select: 'first_name last_name hometown friends picture',
+    })
+    .exec((err, result) => {
+      if (err) {
+        {
+          console.log('Err: ', err);
+          return next(err);
+        }
+        return next(err);
+      }
+      res.json({ result });
     });
 };
