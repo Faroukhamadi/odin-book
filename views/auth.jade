@@ -9,16 +9,17 @@ block content
       .col-sm-6.mb-5
         .card#login-card
           .card-body
-            .mb-3
-              input(type="email", name="username", id="username", class="form-control form-control-lg", placeholder="Email or phone number")
-            .mb-3
-              input(type="password", name="password", id="password", class="form-control form-control-lg", placeholder="Password")
-            .d-grid.gap-2.mb-3
-              button(class="btn btn-primary login-button", type="button") Log In
-            .d-grid.gap-2
-              a(href="/auth/facebook" )
-                button(class="btn btn-primary login-button", type="button") Log In with Facebook
-            hr
-            .d-grid.create-div
-              a(href="/auth/signup") 
-                button(type="button", class="btn btn-success create-button") Create new account
+            form(action="/auth/local", method="POST") 
+              .mb-3
+                input(type="email", name="username", id="username", class="form-control form-control-lg", placeholder="Email or phone number")
+              .mb-3
+                input(type="password", name="password", id="password", class="form-control form-control-lg", placeholder="Password")
+              .d-grid.gap-2.mb-3
+                button(class="btn btn-primary login-button", type="submit") Log In
+              .d-grid.gap-2
+                a(href="/auth/facebook" )
+                  button(class="btn btn-primary login-button", type="button") Log In with Facebook
+              hr
+              .d-grid.create-div
+                a(href="/auth/signup") 
+                  button(type="button", class="btn btn-success create-button") Create new account
