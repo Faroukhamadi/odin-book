@@ -96,5 +96,5 @@ block content
                           span.name #{comment.author.first_name + ' ' + comment.author.last_name}
                         small.comment-text #{comment.content}
                   .comment-input
-                    form(action="/create-comment/" + datum._id, method="POST") 
+                    form(action="/posts/create-comment/" + datum._id, method="POST") 
                       input.form-control(type='text' name="content")

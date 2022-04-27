@@ -27,6 +27,7 @@ exports.create_post = (req, res, next) => {
 };
 
 exports.create_comment = (req, res, next) => {
+  console.log('hello there');
   if (req.user) {
     const comment = new Comment({
       content: req.body.content,
@@ -54,29 +55,44 @@ exports.create_comment = (req, res, next) => {
   } else res.redirect('/auth');
 };
 
-exports.like_post = (req, res, next) => {
+exports.like_post = async (req, res, next) => {
   // TODO: check that person who liked doesn't already exist
   // if he exists remove him else add him
   if (req.user) {
-    console.log('--------hello------------');
-
-    Post.findByIdAndUpdate(
-      req.params.id,
-      { $push: { likes: req.user._id } },
-      (err, result) => {
-        if (err) {
-          console.log('aaaaaaaaaaa');
-          console.log('Error: ', err);
-          return next(err);
-        } else {
+    let user = await Post.find({
+      _id: req.params.id,
+      likes: req.user._id,
+    });
+    if (user.length) {
+      Post.findByIdAndUpdate(
+        req.params.id,
+        { $pull: { likes: req.user._id } },
+        (err, result) => {
+          if (err) {
+            console.log('Error: ', err);
+            return next(err);
+          }
+          // TODO: maybe add the result
           res.redirect('/');
         }
-      }
-    );
+      );
+    } else {
+      Post.findByIdAndUpdate(
+        req.params.id,
+        { $push: { likes: req.user._id } },
+        (err, result) => {
+          if (err) {
+            console.log('Error: ', err);
+            return next(err);
+          }
+          // TODO: maybe add the result
+          res.redirect('/');
+        }
+      );
+    }
   } else res.redirect('/auth');
 };
 
-// TODO: Implement remove like later
 exports.like_count = (req, res, next) => {
   if (req.user) {
     Post.countDocuments({}, (err, count) => {
