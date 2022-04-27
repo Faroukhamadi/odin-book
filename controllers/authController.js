@@ -8,12 +8,6 @@ exports.local_signup_get = (req, res) => {
 };
 
 exports.local_signup_post = (req, res, next) => {
-  console.log(
-    'birthday:',
-    '0' + req.body.month + '/' + req.body.day + '/' + req.body.year
-  );
-  console.log(req.body.gender);
-  console.log('hello');
   bcrypt.hash(req.body.password, 10, (err, hashedPassword) => {
     if (err) return next(err);
     const user = new User({
@@ -25,13 +19,7 @@ exports.local_signup_post = (req, res, next) => {
       gender: req.body.gender,
       picture:
         'https://scontent.ftun16-1.fna.fbcdn.net/v/t1.30497-1/84628273_176159830277856_972693363922829312_n.jpg?stp=c59.0.200.200a_dst-jpg_p200x200&_nc_cat=1&ccb=1-5&_nc_sid=12b3be&_nc_ohc=v46NUOVFoFgAX8HwWaV&_nc_ht=scontent.ftun16-1.fna&edm=AP4hL3IEAAAA&oh=00_AT-iZttniIR8os5NzZBzawNpdOCn3c-c7tD9ukbget_p8A&oe=62794C99',
-      // posts: [],
-      // friends: [],
-      // friendRequests: [],
       birthday: '0' + req.body.month + '/' + req.body.day + '/' + req.body.year,
-      // typeof req.body.birthday === 'string'
-      //   ? format(parseISO(req.body.birthday), 'MM/dd/yyyy')
-      //   : format(req.body.birthday, 'MM/dd/yyyy'),
       password: hashedPassword,
     });
     user.save((err) => {

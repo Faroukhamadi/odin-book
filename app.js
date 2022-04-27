@@ -11,8 +11,10 @@ const User = require('./models/user');
 const session = require('express-session');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
+const compression = require('compression');
+const helmet = require('helmet');
 
-const mongoDB = process.env.MONGO_URI;
+const mongoDB = process.env.MONGO_LOCAL_URI || process.env.MONGO_URI;
 
 mongoose.connect(mongoDB, { useNewUrlParser: true, useUnifiedTopology: true });
 const db = mongoose.connection;
@@ -28,6 +30,8 @@ const app = express();
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
+app.use(helmet());
+app.use(compression());
 app.use(
   session({
     secret: 'cat',

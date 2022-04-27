@@ -56,11 +56,6 @@ exports.accept_friend_request = (req, res, next) => {
 exports.user_index_get = async (req, res, next) => {
   if (req.user) {
     let user = await User.findById(req.user._id);
-    console.log('user: ', user);
-    // I don't want myself to be in the list
-    // I'm friends with: Casper Spencer
-    // I have a friend request from hayet
-    // I don't want people I've sent a friend request to be on the list: - Maverick
     User.find(
       {
         $and: [
@@ -72,15 +67,9 @@ exports.user_index_get = async (req, res, next) => {
       },
       (err, users) => {
         if (err) {
-          {
-            console.log('Err: ', err);
-            return next(err);
-          }
+          console.log('Err: ', err);
           return next(err);
         }
-        console.log('users: ', users);
-        // res.json({ users });
-        console.log('data:', users);
         res.render('users_index', { data: users });
       }
     );
@@ -94,7 +83,6 @@ exports.user_show_get = (req, res, next) => {
         path: 'posts',
         populate: {
           path: 'comments',
-          // NOTE: Might need the id in select later
           populate: {
             path: 'author',
             select: '-_id picture first_name last_name',
@@ -106,7 +94,6 @@ exports.user_show_get = (req, res, next) => {
           console.log('Err:', err);
           return next(err);
         }
-        console.log({ data: userProfile });
         res.render('user_show', {
           data: userProfile,
           route: req.baseUrl,
@@ -127,7 +114,6 @@ exports.friend_requests_get = (req, res, next) => {
           console.log('Err: ', err);
           return next(err);
         }
-        console.log('last resulttttttt-', result);
         res.render('friend_requests', { data: result });
       });
   } else res.redirect('/auth');
@@ -172,11 +158,6 @@ exports.accept_friend_request_test = (req, res, next) => {
 
 exports.user_index_get_test = async (req, res, next) => {
   let user = await User.findById('6255964096305191e8a91dac');
-  console.log('user: ', user);
-  // I don't want myself to be in the list
-  // I'm friends with: Casper Spencer
-  // I have a friend request from hayet
-  // I don't want people I've sent a friend request to be on the list: - Maverick
   User.find(
     {
       $and: [
@@ -188,22 +169,15 @@ exports.user_index_get_test = async (req, res, next) => {
     },
     (err, users) => {
       if (err) {
-        {
-          console.log('Err: ', err);
-          return next(err);
-        }
+        console.log('Err: ', err);
         return next(err);
       }
-      console.log('users: ', users);
-      // res.json({ users });
-      console.log('data:', users);
       res.render('users_index', { data: users });
     }
   );
 };
 
 exports.user_show_get_test = (req, res, next) => {
-  // User.findById('6255967b6deeb3c285b9940f')
   User.findById('6255964096305191e8a91dac')
     .populate({
       path: 'posts',
@@ -221,7 +195,6 @@ exports.user_show_get_test = (req, res, next) => {
         console.log('Err:', err);
         return next(err);
       }
-      console.log({ data: userProfile });
       res.render('user_show', {
         data: userProfile,
       });
