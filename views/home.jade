@@ -17,11 +17,32 @@ block content
           li.nav-item
             a.nav-link(href='/users/index-page').text-white.font-weight-bold Users Index
           li.nav-item
-            //- TODO: implement this later
             a.nav-link(href='/users/friend-requests').text-white.font-weight-bold Friend Requests
           li.nav-item
             a.nav-link(href='/auth/logout').text-white.font-weight-bold Log Out
   .container.mt-5.mb-5
+    .row.d-flex.align-items-center.justify-content-center
+      .col-sm.mb-5
+        .card.post-card
+          .d-flex.justify-content-between.p-2.px-3
+            .d-flex.flex-row.align-items-center.usable
+              a(href=currentUser.url) 
+                img.rounded-circle(src=currentUser.picture width='50' class="border border-primary")
+              .d-flex.flex-column.ml-2
+                a(href=currentUser.url class="already-link")
+                  span.font-weight-bold #{currentUser.first_name + ' ' + currentUser.last_name}
+                .ellipsis
+                  small.mr-2 20 mins
+          .p-2
+            form(action="/posts/create-post", method="post") 
+              .mb-3
+                label.form-label(for='new-post').lead  Post Content
+                textarea#new-post.form-control(rows='3' name="postcontent")
+              .d-grid
+                button.btn.btn-primary(type='submit') Create Post
+
+
+
     -var index = -1
     each datum in data
       -index++

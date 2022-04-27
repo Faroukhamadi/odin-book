@@ -3,7 +3,8 @@ const router = express.Router();
 const connect_controller = require('../controllers/authController');
 
 router.get('/', (req, res) => {
-  res.render('auth');
+  if (req.user) res.redirect('/');
+  else res.render('auth');
 });
 
 router.get('/facebook', connect_controller.facebook_login_post);

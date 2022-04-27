@@ -6,10 +6,12 @@ router.post('/create-post', post_controller.create_post);
 router.post('/create-comment/:id', post_controller.create_comment);
 router.post('/like-post/:id', post_controller.like_post);
 router.get('/like-count', post_controller.like_count);
+router.get('/', post_controller.absolute_path);
 
+// NOTE: test routes
 router.post('/create-post/test', post_controller.create_post_test);
-// router.patch('/like-post/test', post_controller.like_post_test);
+router.get('/like-post/test', post_controller.like_post_test);
 router.post('/create-comment/test', post_controller.create_comment_test);
-router.get('/', post_controller.post_list_test);
+// router.get('/', post_controller.post_list_test);
 
 module.exports = router;

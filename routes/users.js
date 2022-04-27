@@ -1,6 +1,7 @@
 const router = require('express').Router();
 const user_controller = require('../controllers/userController');
 
+router.get('/', user_controller.absolute_path);
 router.post('/friend-request/:id', user_controller.send_friend_request);
 router.post(
   '/friend-request/accept/:id',
