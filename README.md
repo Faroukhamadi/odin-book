@@ -14,7 +14,7 @@ This Project uses the MVC model and it serves static HTML pages that have dynami
 - [Mongoose](https://mongoosejs.com/)
 - [Passport](http://www.passportjs.org/)
 - [MongoDb](https://www.mongodb.com/)
-- # [Bootstrap](https://getbootstrap.com), Sadly, Now I know
+- [Bootstrap](https://getbootstrap.com), Sadly, Now I know
 
 # odin-book
 
