@@ -1,7 +1,6 @@
 const passport = require('passport');
 const bcrypt = require('bcrypt');
 const User = require('../models/user');
-const { format, parseISO } = require('date-fns');
 
 exports.local_signup_get = (req, res) => {
   res.render('signup');

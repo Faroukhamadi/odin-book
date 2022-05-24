@@ -1,8 +1,4 @@
 const User = require('../models/user');
-const Post = require('../models/post');
-const bcrypt = require('bcrypt');
-const passport = require('passport');
-const { body, validationResult } = require('express-validator');
 
 exports.absolute_path = (req, res, next) => {
   if (req.user) res.redirect('/');

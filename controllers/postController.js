@@ -1,6 +1,5 @@
 const Post = require('../models/post');
 const Comment = require('../models/comment');
-const User = require('../models/user');
 
 exports.absolute_path = (req, res, next) => {
   if (req.user) res.redirect('/');

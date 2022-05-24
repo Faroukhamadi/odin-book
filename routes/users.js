@@ -12,11 +12,6 @@ router.get('/show-page/:id', user_controller.user_show_get);
 router.get('/friend-requests', user_controller.friend_requests_get);
 
 // Tests
-// router.patch(
-//   '/friend-request/accept/test',
-//   user_controller.accept_friend_request_test
-// );
-// router.patch('/friend-request/test', user_controller.send_friend_request_test);
 router.get('/index-page/test', user_controller.user_index_get_test);
 router.get('/show-page/test', user_controller.user_show_get_test);
 router.get('/friends-requests/test', user_controller.friend_requests_get_test);
